@@ -1,7 +1,7 @@
 # EGO-Planner-v2
 Swarm Playground, the codebase of the paper "[Swarm of micro flying robots in the wild](https://www.science.org/doi/10.1126/scirobotics.abm5954)".
 
-This work was born out of the [MINCO](https://github.com/ZJU-FAST-Lab/GCOPTER).
+This work was born out of [MINCO](https://github.com/ZJU-FAST-Lab/GCOPTER).
 If you find it interesting, please give both repos stars generously. Thanks.
 
 
