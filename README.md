@@ -10,4 +10,5 @@ This software (version Dec. 2021) was originally planned to be attached directly
 We will contact editors to add the codebase on weekdays. Before that, please download it here. Sorry for the inconvenience. 2022-5-7.
 
 
-![封面2](https://user-images.githubusercontent.com/26641182/167238296-d4f3042d-63e4-41f7-a64e-df4a550eb443.png)
+![封面图](https://user-images.githubusercontent.com/26641182/167353273-080a3ee2-2def-4f7b-9939-d4a2ba74c571.jpg)
+
