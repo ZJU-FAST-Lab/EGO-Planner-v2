@@ -1,0 +1,100 @@
+<launch>
+    <!-- size of map, change the size inflate x, y, z according to your application -->
+    <arg name="drone_id" default="0"/>
+    <arg name="map_size_x"/>
+    <arg name="map_size_y"/>
+    <arg name="map_size_z"/>
+    <arg name="init_x"/>
+    <arg name="init_y"/>
+    <arg name="init_z"/>
+    <arg name="flight_type" default="2"/>
+    <arg name="point_num" default="1"/>
+    <arg name="target0_x" default="0.0"/>
+    <arg name="target0_y" default="0.0"/>
+    <arg name="target0_z" default="0.0"/>
+    <arg name="target1_x" default="0.0"/>
+    <arg name="target1_y" default="0.0"/>
+    <arg name="target1_z" default="0.0"/>
+    <arg name="target2_x" default="0.0"/>
+    <arg name="target2_y" default="0.0"/>
+    <arg name="target2_z" default="0.0"/>
+    <arg name="target3_x" default="0.0"/>
+    <arg name="target3_y" default="0.0"/>
+    <arg name="target3_z" default="0.0"/>
+    <arg name="target4_x" default="0.0"/>
+    <arg name="target4_y" default="0.0"/>
+    <arg name="target4_z" default="0.0"/>
+    <!-- topic of your odometry such as VIO or LIO -->
+    <arg name="odom_topic"/>
+    <!-- main algorithm params -->
+    <include file="$(find ego_planner)/launch/include/advanced_param.xml">
+        <arg name="drone_id" value="$(arg drone_id)"/>
+        <arg name="map_size_x_" value="$(arg map_size_x)"/>
+        <arg name="map_size_y_" value="$(arg map_size_y)"/>
+        <arg name="map_size_z_" value="$(arg map_size_z)"/>
+        <arg name="odometry_topic" value="$(arg odom_topic)"/>
+        <!-- camera pose: transform of camera frame in the world frame -->
+        <!-- depth topic: depth image, 640x480 by default -->
+        <!-- don't set cloud_topic if you already set these ones! -->
+        <arg name="camera_pose_topic" value="pcl_render_node/camera_pose"/>
+        <arg name="depth_topic" value="pcl_render_node/depth"/>
+        <!-- topic of point cloud measurement, such as from LIDAR  -->
+        <!-- don't set camera pose and depth, if you already set this one! -->
+        <arg name="cloud_topic" value="pcl_render_node/cloud"/>
+        <!-- intrinsic params of the depth camera -->
+        <arg name="cx" value="321.04638671875"/>
+        <arg name="cy" value="243.44969177246094"/>
+        <arg name="fx" value="387.229248046875"/>
+        <arg name="fy" value="387.229248046875"/>
+        <!-- maximum velocity, acceleration and jerk the drone will reach -->
+        <arg name="max_vel" value="1.5" />
+        <arg name="max_acc" value="6.0" />
+        <arg name="max_jer" value="20.0" />
+        <!--always set to 1.5 times grater than sensing horizen-->
+        <arg name="planning_horizon" value="7.5" />
+        <arg name="use_multitopology_trajs" value="false" />
+        <!-- 1: use 2D Nav Goal to select goal  -->
+        <!-- 2: use global waypoints below  -->
+        <arg name="flight_type" value="$(arg flight_type)" />
+        <!-- global waypoints -->
+        <!-- It generates a piecewise min-snap traj passing all waypoints -->
+        <arg name="point_num" value="$(arg point_num)" />
+        <arg name="point0_x" value="$(arg target0_x)" />
+        <arg name="point0_y" value="$(arg target0_y)" />
+        <arg name="point0_z" value="$(arg target0_z)" />
+        <arg name="point1_x" value="$(arg target1_x)" />
+        <arg name="point1_y" value="$(arg target1_y)" />
+        <arg name="point1_z" value="$(arg target1_z)" />
+        <arg name="point2_x" value="$(arg target2_x)" />
+        <arg name="point2_y" value="$(arg target2_y)" />
+        <arg name="point2_z" value="$(arg target2_z)" />
+        <arg name="point3_x" value="$(arg target3_x)" />
+        <arg name="point3_y" value="$(arg target3_y)" />
+        <arg name="point3_z" value="$(arg target3_z)" />
+        <arg name="point4_x" value="$(arg target4_x)" />
+        <arg name="point4_y" value="$(arg target4_y)" />
+        <arg name="point4_z" value="$(arg target4_z)" />
+    </include>
+    <!-- trajectory server -->
+    <node pkg="ego_planner" name="drone_$(arg drone_id)_traj_server" type="traj_server" output="screen">
+        <remap from="position_cmd" to="drone_$(arg drone_id)_planning/pos_cmd"/>
+        <remap from="~planning/trajectory" to="drone_$(arg drone_id)_planning/trajectory"/>
+        <param name="traj_server/time_forward" value="1.0" type="double"/>
+    </node>
+    <!-- use simulator -->
+    <include file="$(find ego_planner)/launch/include/simulator.xml">
+        <arg name="drone_id" value="$(arg drone_id)"/>
+        <arg name="map_size_x_" value="$(arg map_size_x)"/>
+        <arg name="map_size_y_" value="$(arg map_size_y)"/>
+        <arg name="map_size_z_" value="$(arg map_size_z)"/>
+        <arg name="init_x_" value="$(arg init_x)"/>
+        <arg name="init_y_" value="$(arg init_y)"/>
+        <arg name="init_z_" value="$(arg init_z)"/>
+        <arg name="odometry_topic" value="$(arg odom_topic)" />
+    </include>
+    <include file="$(find manual_take_over)/launch/take_over_drone.launch">
+        <arg name="drone_id" value="$(arg drone_id)"/>
+        <arg name="cmd_topic" value="drone_$(arg drone_id)_planning/pos_cmd"/>
+    </include>
+</launch>
+    

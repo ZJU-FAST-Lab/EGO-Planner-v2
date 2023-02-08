@@ -1,0 +1,26 @@
+<launch>
+    <node pkg="random_goals" name="random_goals_node" type="random_goals_node" output="screen">
+        <param name="drone_num" value="10"/>
+        <param name="goal_num" value="20"/>
+        <rosparam param="goal0">[-7.96076938005819e-06,-2.999999999989438,1.0]</rosparam>
+        <rosparam param="goal1">[-0.927057797149633,-2.8531673348655997,1.0]</rosparam>
+        <rosparam param="goal2">[-1.76336090919162,-2.4270472397411025,1.0]</rosparam>
+        <rosparam param="goal3">[-2.427054258576642,-1.763351248595976,1.0]</rosparam>
+        <rosparam param="goal4">[-2.8531710248896607,-0.9270464404387113,1.0]</rosparam>
+        <rosparam param="goal5">[-2.9999999999973594,3.980384690032598e-06,1.0]</rosparam>
+        <rosparam param="goal6">[-2.8531685648786427,0.9270540115809571,1.0]</rosparam>
+        <rosparam param="goal7">[-2.427049579357222,1.763357688996175,1.0]</rosparam>
+        <rosparam param="goal8">[-1.7633544687976284,2.4270519189690676,1.0]</rosparam>
+        <rosparam param="goal9">[-0.9270502260106506,2.853169794886663,1.0]</rosparam>
+        <rosparam param="goal10">[0.0,3.0,1.0]</rosparam>
+        <rosparam param="goal11">[0.9270502260106492,2.8531697948866634,1.0]</rosparam>
+        <rosparam param="goal12">[1.763354468797627,2.427051918969069,1.0]</rosparam>
+        <rosparam param="goal13">[2.4270495793572207,1.763357688996177,1.0]</rosparam>
+        <rosparam param="goal14">[2.8531685648786422,0.9270540115809591,1.0]</rosparam>
+        <rosparam param="goal15">[2.9999999999973594,3.980384691364866e-06,1.0]</rosparam>
+        <rosparam param="goal16">[2.8531710248896607,-0.9270464404387101,1.0]</rosparam>
+        <rosparam param="goal17">[2.4270542585766424,-1.763351248595975,1.0]</rosparam>
+        <rosparam param="goal18">[1.76336090919162,-2.4270472397411025,1.0]</rosparam>
+        <rosparam param="goal19">[0.927057797149633,-2.8531673348655997,1.0]</rosparam>
+    </node>
+</launch>

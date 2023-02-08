@@ -1,0 +1,51 @@
+<launch>
+
+  <arg name="joy_id" value="1"/>
+
+  <node name="joy_node_$(arg joy_id)" pkg="joy" type="joy_node">
+    <remap from="joy" to="/joy$(arg joy_id)"/>
+    <param name="dev" value="/dev/input/js$(arg joy_id)" type="string"/>
+    <param name="deadzone" value="0.1" type="double"/>
+    <param name="autorepeat_rate" value="10.0" type="double"/>
+    <param name="coalesce_interval" value="0.1" type="double"/>
+  </node>
+  <node pkg="moving_obstacles" name="moving_obstacles_joy$(arg joy_id)" type="moving_obstacles" output="screen">
+    <remap from="~joy" to="/joy$(arg joy_id)"/>
+    <param name="obstacle1_id" value="22"/>
+    <rosparam param="obstacle1_init_pos">[10, 2]</rosparam>
+    <param name="desired_clearance1" value="0.5"/>
+    <param name="obstacle2_id" value="23"/>
+    <rosparam param="obstacle2_init_pos">[10, -2]</rosparam>
+    <param name="desired_clearance2" value="0.5"/>
+  </node>
+
+  <node pkg="odom_visualization" name="fly_car1_odom_visualization_joy$(arg joy_id)" type="odom_visualization" output="screen">
+    <remap from="~odom" to="/moving_obstacles_joy$(arg joy_id)/odom_obs1"/>
+    <param name="mesh_resource" value="package://odom_visualization/meshes/car.dae"/>
+    <param name="color/a" value="1.0"/>
+    <param name="color/r" value="1.0"/>
+    <param name="color/g" value="1.0"/>
+    <param name="color/b" value="0.0"/>
+    <param name="covariance_scale" value="100.0"/>
+    <param name="robot_scale" value="0.2"/>
+    <param name="rotate_yaw_deg" value="90.0"/>
+    <param name="cross_config" value="talse"/>
+    <param name="tf45" value="false"/>
+    <param name="drone_id" value="20"/>
+  </node>
+
+  <node pkg="odom_visualization" name="fly_car2_odom_visualization_joy$(arg joy_id)" type="odom_visualization" output="screen">
+    <remap from="~odom" to="moving_obstacles_joy$(arg joy_id)/odom_obs2"/>
+    <param name="mesh_resource" value="package://odom_visualization/meshes/car.dae"/>
+    <param name="color/a" value="1.0"/>
+    <param name="color/r" value="1.0"/>
+    <param name="color/g" value="1.0"/>
+    <param name="color/b" value="0.0"/>
+    <param name="covariance_scale" value="100.0"/>
+    <param name="robot_scale" value="0.2"/>
+    <param name="rotate_yaw_deg" value="90.0"/>
+    <param name="cross_config" value="talse"/>
+    <param name="tf45" value="false"/>
+    <param name="drone_id" value="21"/>
+  </node>
+</launch>

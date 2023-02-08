@@ -1,0 +1,11 @@
+<launch>
+  <node name="joy_node" pkg="joy" type="joy_node">
+    <remap from="joy" to="/joy"/>
+    <param name="dev" value="/dev/input/js0" type="string"/>
+    <param name="deadzone" value="0.1" type="double"/>
+    <param name="autorepeat_rate" value="10.0" type="double"/>
+    <param name="coalesce_interval" value="0.1" type="double"/>
+  </node>
+  <node pkg="manual_take_over" name="manual_take_over_station" type="manual_take_over_station" output="screen">
+  </node>
+</launch>

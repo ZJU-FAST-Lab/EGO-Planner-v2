@@ -1,0 +1,7 @@
+<launch>
+    <arg name="drone_id" default="999"/>
+    <arg name="cmd_topic" default="/position_cmd"/>
+    <node pkg="manual_take_over" name="drone_$(arg drone_id)_manual_take_over" type="manual_take_over" output="screen">
+      <remap from="/position_cmd" to="$(arg cmd_topic)"/>
+    </node>
+</launch>

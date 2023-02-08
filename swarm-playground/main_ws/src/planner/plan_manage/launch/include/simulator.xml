@@ -1,0 +1,75 @@
+<launch>
+    <arg name="init_x_"/>
+    <arg name="init_y_"/>
+    <arg name="init_z_"/>
+    <arg name="map_size_x_"/>
+    <arg name="map_size_y_"/>
+    <arg name="map_size_z_"/>
+    <arg name="c_num"/>
+    <arg name="p_num"/>
+    <arg name="min_dist"/>
+    <arg name="odometry_topic"/>
+    <arg name="drone_id"/>
+
+    <!-- <node pkg="so3_quadrotor_simulator" type="quadrotor_simulator_so3" name="drone_$(arg drone_id)_quadrotor_simulator_so3" output="screen">
+        <param name="rate/odom" value="200.0"/>
+        <param name="simulator/init_state_x" value="$(arg init_x_)"/>
+        <param name="simulator/init_state_y" value="$(arg init_y_)"/>
+        <param name="simulator/init_state_z" value="$(arg init_z_)"/>
+
+        <remap from="~odom" to="drone_$(arg drone_id)_visual_slam/odom"/>
+        <remap from="~cmd" to="drone_$(arg drone_id)_so3_cmd"/>
+        <remap from="~force_disturbance" to="drone_$(arg drone_id)_force_disturbance"/>    
+        <remap from="~moment_disturbance" to="drone_$(arg drone_id)_moment_disturbance"/>        
+  </node>
+ 
+  <node pkg="nodelet" type="nodelet" args="standalone so3_control/SO3ControlNodelet" name="drone_$(arg drone_id)_so3_control" required="true" output="screen">
+        <param name="so3_control/init_state_x" value="$(arg init_x_)"/>
+        <param name="so3_control/init_state_y" value="$(arg init_y_)"/>
+        <param name="so3_control/init_state_z" value="$(arg init_z_)"/>
+        <remap from="~odom" to="drone_$(arg drone_id)_visual_slam/odom"/>
+        <remap from="~position_cmd" to="drone_$(arg drone_id)_planning/pos_cmd"/>
+        <remap from="~motors" to="drone_$(arg drone_id)_motors"/>
+        <remap from="~corrections" to="drone_$(arg drone_id)_corrections"/>
+        <remap from="~so3_cmd" to="drone_$(arg drone_id)_so3_cmd"/>
+        <rosparam file="$(find so3_control)/config/gains_hummingbird.yaml"/>
+        <rosparam file="$(find so3_control)/config/corrections_hummingbird.yaml"/>
+        <param name="mass" value="0.98"/>
+        <param name="use_angle_corrections " value="false"/>
+        <param name="use_external_yaw " value="false"/>
+        <param name="gains/rot/z" value="1.0"/>    
+        <param name="gains/ang/z" value="0.1"/>        
+  </node> -->
+
+    <node pkg="poscmd_2_odom" name="drone_$(arg drone_id)_poscmd_2_odom" type="poscmd_2_odom" output="screen">
+        <param name="init_x" value="$(arg init_x_)"/>
+        <param name="init_y" value="$(arg init_y_)"/>
+        <param name="init_z" value="$(arg init_z_)"/>
+        <remap from="~command" to="drone_$(arg drone_id)_planning/pos_cmd"/>
+        <remap from="~odometry" to="drone_$(arg drone_id)_$(arg odometry_topic)"/>
+    </node>
+
+    <node pkg="odom_visualization" name="drone_$(arg drone_id)_odom_visualization" type="odom_visualization" output="screen">
+        <remap from="~odom" to="drone_$(arg drone_id)_visual_slam/odom"/>
+        <param name="color/a" value="1.0"/>
+        <param name="color/r" value="0.0"/>
+        <param name="color/g" value="0.0"/>
+        <param name="color/b" value="0.0"/>
+        <param name="covariance_scale" value="100.0"/>
+        <param name="robot_scale" value="0.35"/>
+        <param name="tf45" value="false"/>
+        <param name="drone_id" value="$(arg drone_id)"/>
+    </node>
+    <node pkg="local_sensing_node" type="pcl_render_node" name="drone_$(arg drone_id)_pcl_render_node" output="screen">
+        <rosparam command="load" file="$(find local_sensing_node)/params/camera.yaml" />
+        <param name="sensing_horizon" value="5.0" />
+        <param name="sensing_rate" value="30.0"/>
+        <param name="estimation_rate" value="30.0"/>
+        <param name="map/x_size" value="$(arg map_size_x_)"/>
+        <param name="map/y_size" value="$(arg map_size_y_)"/>
+        <param name="map/z_size" value="$(arg map_size_z_)"/>
+        <remap from="~global_map" to="/map_generator/global_cloud"/>
+        <remap from="~odometry" to="/drone_$(arg drone_id)_$(arg odometry_topic)"/>
+        <remap from="~pcl_render_node/cloud" to="/drone_$(arg drone_id)_pcl_render_node/cloud"/>
+    </node>
+</launch>

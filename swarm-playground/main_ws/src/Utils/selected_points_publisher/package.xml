@@ -1,0 +1,19 @@
+<?xml version="0.1.0"?>
+<package>
+  <name>selected_points_publisher</name>
+  <version>0.1.0</version>
+  <description>RViz plugin to select points and publish them in a new topic. (Updated by Xin Zhou)</description>
+  <maintainer  email="david.wong@tier4.jp">David Wong</maintainer>
+  <maintainer  email="iszhouxin@zju.edu.cn">Xin Zhou</maintainer>
+  <license>Apache 2</license>
+  <author email="david.wong@tier4.jp">David Wong</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rviz</build_depend>
+
+  <run_depend>rviz</run_depend>
+
+  <export>
+      <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>

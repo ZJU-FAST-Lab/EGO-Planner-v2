@@ -1,0 +1,54 @@
+<launch>
+    <arg name="map_size_x" value="200.0"/>
+    <arg name="map_size_y" value="200.0"/>
+    <arg name="map_size_z" value=" 3.0"/>
+    <arg name="odom_topic" value="visual_slam/odom" />
+
+    <!-- map -->
+    <node pkg ="map_generator" name ="random_forest" type ="random_forest" output = "screen">
+        <param name="map/x_size" value="26" />
+        <param name="map/y_size" value="20" />
+        <param name="map/z_size" value="3" />
+        <param name="map/resolution" value="0.1"/>
+        <param name="ObstacleShape/seed" value="1"/>
+        <param name="map/obs_num" value="100"/>
+        <param name="ObstacleShape/lower_rad" value="0.5"/>
+        <param name="ObstacleShape/upper_rad" value="0.7"/>
+        <param name="ObstacleShape/lower_hei" value="0.0"/>
+        <param name="ObstacleShape/upper_hei" value="3.0"/>
+        <param name="map/circle_num" value="100"/>
+        <param name="ObstacleShape/radius_l" value="0.7"/>
+        <param name="ObstacleShape/radius_h" value="0.5"/>
+        <param name="ObstacleShape/z_l" value="0.7"/>
+        <param name="ObstacleShape/z_h" value="0.8"/>
+        <param name="ObstacleShape/theta" value="0.5"/>
+        <param name="pub_rate" value="1.0"/>
+        <param name="min_distance" value="0.8"/>
+    </node>
+
+    <include file="$(find ego_planner)/launch/include/run_in_sim.xml">
+        <arg name="drone_id" value="0"/>
+        <arg name="init_x" value="-15.0"/>
+        <arg name="init_y" value="0.0"/>
+        <arg name="init_z" value="1.0"/>
+        <arg name="map_size_x" value="$(arg map_size_x)"/>
+        <arg name="map_size_y" value="$(arg map_size_y)"/>
+        <arg name="map_size_z" value="$(arg map_size_z)"/>
+        <arg name="odom_topic" value="$(arg odom_topic)"/>
+        <arg name="flight_type" value="2"/>
+        <arg name="point_num" default="4"/>
+        <arg name="target0_x" default="0.0"/>
+        <arg name="target0_y" default="8.0"/>
+        <arg name="target0_z" default="1.0"/>
+        <arg name="target1_x" default="8.0"/>
+        <arg name="target1_y" default="0.0"/>
+        <arg name="target1_z" default="1.0"/>
+        <arg name="target2_x" default="0.0"/>
+        <arg name="target2_y" default="-8.0"/>
+        <arg name="target2_z" default="1.0"/>
+        <arg name="target3_x" default="-8.0"/>
+        <arg name="target3_y" default="0.0"/>
+        <arg name="target3_z" default="1.0"/>
+    </include>
+</launch>
+
