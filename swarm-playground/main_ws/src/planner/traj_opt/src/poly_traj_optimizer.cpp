@@ -143,7 +143,7 @@ namespace ego_planner
     for (int i = 0; i < durations.size(); ++i)
       t_seg_start(i + 1) = t_seg_start(i) + durations(i);
     const double DURATION = durations.sum();
-    double t = 0.0, t_step = RES / max_vel_;
+    double t = 0.0, t_step = min(RES / max_vel_, durations.minCoeff() / max(cps_num_prePiece_, 1) / 1.5);
     Eigen::Vector3d pt_last = traj.getPos(0.0);
     // pts_check[0].push_back(pt_last);
     int id_cps_curr = 0, id_piece_curr = 0;
