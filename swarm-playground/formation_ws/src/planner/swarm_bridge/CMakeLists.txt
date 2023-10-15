@@ -10,6 +10,7 @@ find_package(Eigen3 REQUIRED)
 
 set(ENABLE_TCP false) # requires zmq, zmqpp 
 
+find_package(Boost REQUIRED COMPONENTS system filesystem thread)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   std_msgs
@@ -35,6 +36,7 @@ add_executable(bridge_node_udp
   )
 target_link_libraries(bridge_node_udp 
   ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
   )
 
 if(ENABLE_TCP)
@@ -46,6 +48,7 @@ if(ENABLE_TCP)
     ${catkin_LIBRARIES}
     zmq
     zmqpp
+    ${Boost_LIBRARIES}
     )
 
 endif(ENABLE_TCP)
@@ -55,6 +58,7 @@ add_executable(traj2odom_node
   )
 target_link_libraries(traj2odom_node 
   ${catkin_LIBRARIES}
+  ${Boost_LIBRARIES}
   )
 
 

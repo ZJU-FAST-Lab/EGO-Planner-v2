@@ -6,7 +6,7 @@ catkin_package()
 include_directories(include ${catkin_INCLUDE_DIRS})
 link_directories(${catkin_LIBRARY_DIRS})
 
-find_package(Qt5 ${rviz_QT_VERSION} EXACT REQUIRED Core Widgets Quick)
+find_package(Qt5 ${rviz_QT_VERSION} REQUIRED Core Widgets Quick)
 set(QT_LIBRARIES Qt5::Widgets)
 qt5_wrap_cpp(MOC_FILES
   include/selected_points_publisher/selected_points_publisher.hpp
