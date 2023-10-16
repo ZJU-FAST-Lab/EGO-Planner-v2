@@ -3,4 +3,4 @@ __pycache__
 build/
 devel/
 logs/
-.catkin*
+.catkin_tools
