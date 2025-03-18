@@ -312,6 +312,7 @@ namespace ego_planner
           {
             min_cost = final_cost;
             best_MJO = ploy_traj_opt_->getMinJerkOpt();
+            flag_success = true;
           }
 
           // visualization
