@@ -127,7 +127,7 @@ bool AStar::ConvertToIndexAndAdjustStartEndPoints(Vector3d start_pt, Vector3d en
                 return false;
             }
 
-            occ = checkOccupancy(Index2Coord(start_idx));
+            occ = checkOccupancy(Index2Coord(end_idx));
             if (occ == -1)
             {
                 ROS_WARN("[Astar] End point outside the map region.");
